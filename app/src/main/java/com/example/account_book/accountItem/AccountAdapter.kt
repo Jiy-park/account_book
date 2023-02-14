@@ -15,6 +15,9 @@ class AccountAdapter(val activity: FragmentActivity?, val dayList:MutableList<By
         return Holder(activity, binding)
     }
 
+
+
+
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.setting(dayList[position])
     }
