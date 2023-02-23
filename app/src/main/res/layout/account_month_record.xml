@@ -40,7 +40,6 @@
             android:layout_marginHorizontal="2dp"
             android:textColor="@color/menu_selected"
             android:background="@color/reverse_menu_selected"/>
-
     </LinearLayout>
 
     <View
