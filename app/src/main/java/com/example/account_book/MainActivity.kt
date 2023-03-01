@@ -9,7 +9,8 @@ import com.example.account_book.main_menu.ChartFragment
 import com.example.account_book.main_menu.SettingFragment
 
 class MainActivity : AppCompatActivity() {
-    val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 화면 전환 구현 메소드
-    fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.main, fragment)

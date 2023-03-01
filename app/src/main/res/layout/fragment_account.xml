@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.account_book.accountItem.AccountViewModel" />
+            type="com.example.account_book.account_Item.AccountMainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@{viewModel.selectedYear + viewModel.selectedMonth}"
+                android:text="@{viewModel.selectedYear + ` 년 ` + viewModel.selectedMonth + ` 월`}"
                 android:textSize="15sp"
                 android:textColor="@color/menu_selected" />
 
