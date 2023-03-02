@@ -24,10 +24,10 @@ data class DetailEntity(
 
 @Dao
 interface DetailDao{
-    @Query("SELECT * FROM detailDB")
-    fun getAllDetail():List<DetailEntity>
-    @Query("SELECT * FROM detailDB WHERE dateID = :date")
-    fun getAllDetailByDate(date:Int):List<DetailEntity>
+    @Query("SELECT * FROM detailDB ORDER BY dateID, orderID DESC")
+    fun getAllDetail():MutableList<DetailEntity>
+    @Query("SELECT * FROM detailDB WHERE dateID = :date ORDER BY dateID, orderID DESC")
+    fun getAllDetailByDate(date:Int):MutableList<DetailEntity>
 
     @Insert
     fun insertDetail(record: DetailEntity)
@@ -37,5 +37,8 @@ interface DetailDao{
 
     @Delete
     fun deleteDetail(record: DetailEntity)
+
+    @Query("DELETE FROM detailDB WHERE (dateID = :date AND orderID = :order)")
+    fun deleteByDateOrder(date:Int, order: Int)
 }
 

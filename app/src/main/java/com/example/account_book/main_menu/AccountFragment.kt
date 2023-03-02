@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.account_book.account_Item.AccountMainViewModel
@@ -18,26 +20,26 @@ import com.example.account_book.room.DB
 class AccountFragment : Fragment() {
     private lateinit var binding: FragmentAccountBinding
     private lateinit var accountViewModel: AccountMainViewModel
-    private lateinit var dateList: List<DateEntity>
+    private lateinit var dateList: MutableList<DateEntity>
     lateinit var db:DB
     lateinit var monthAdapter:AccountMonthAdapter
 
 
 //          ID  WEEK
     val DB_TEST_INPUT_DATA_DATE = listOf<DateEntity>(
-        DateEntity(230212, "일요일"),
-        DateEntity(230213, "월요일"),
-        DateEntity(230214, "화요일"),
-        DateEntity(230216, "목요일"),
-        DateEntity(230220, "월요일"),
-        DateEntity(230221, "화요일"),
-        DateEntity(230222, "수요일"),
-        DateEntity(230224, "금요일"),
-        DateEntity(230301, "수요일"),
-        DateEntity(230304, "토요일"),
-        DateEntity(230305, "일요일"),
-        DateEntity(230306, "월요일"),
-        DateEntity(230309, "목요일"),
+        DateEntity(2302, 12, "일요일"),
+        DateEntity(2302, 13, "월요일"),
+        DateEntity(2302, 14, "화요일"),
+        DateEntity(2302, 16, "목요일"),
+        DateEntity(2302, 20, "월요일"),
+        DateEntity(2302, 21, "화요일"),
+        DateEntity(2302, 22, "수요일"),
+        DateEntity(2302, 24, "금요일"),
+        DateEntity(2303, 1, "수요일"),
+        DateEntity(2303, 4, "토요일"),
+        DateEntity(2303, 5, "일요일"),
+        DateEntity(2303, 6, "월요일"),
+        DateEntity(2303, 9, "목요일"),
     )
 
 //          DATE_ID ORDER_ID CLASSIFICATION DETAIL TIME BANK AMOUNT
@@ -67,11 +69,19 @@ class AccountFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.d("LOG_CHECK", "AccountFragment :: onCreateView() called")
         binding = FragmentAccountBinding.inflate(inflater,container,false)
-        accountViewModel = ViewModelProvider(this@AccountFragment)[AccountMainViewModel::class.java]
         db = DB.getDatabase(binding.root.context)!!
-        dateList = db.dateDao().getAllDate()
         monthAdapter = AccountMonthAdapter(this@AccountFragment)
-        monthAdapter.dateList = dateList
+        accountViewModel = ViewModelProvider(this@AccountFragment)[AccountMainViewModel::class.java]
+        accountViewModel.selectedMonth.observe(viewLifecycleOwner, Observer {
+            val year = accountViewModel.selectedYear.value!!.substring(2)
+            val month = if(accountViewModel.selectedMonth.value!!.length == 1) "0${accountViewModel.selectedMonth.value}"
+                        else accountViewModel.selectedMonth.value
+            val yearMonth = (year + month).toInt()
+            dateList = db.dateDao().getAllDateByDate(yearMonth)
+            Log.d("LOG_CHECK", "AccountFragment :: onCreateView() called $yearMonth  $dateList")
+            monthAdapter.dateList = dateList
+            monthAdapter.notifyDataSetChanged()
+        })
 
 
         binding.viewModel = accountViewModel
@@ -101,14 +111,14 @@ class AccountFragment : Fragment() {
 //            Toast.makeText(binding.root.context, "success insert!", Toast.LENGTH_SHORT).show()
         }
         binding.btnTest.setOnClickListener {
-            for(record in DB_TEST_INPUT_DATA_DATE){
-                db.dateDao().insertDate(record)
-                Log.d("LOG_CHECK", "insert date-record $record")
-            }
-            for(record in DB_TEST_INPUT_DATA_DETAIL){
-                db.detailDao().insertDetail(record)
-                Log.d("LOG_CHECK", "insert detail-record $record")
-            }
+//            for(record in DB_TEST_INPUT_DATA_DATE){
+//                db.dateDao().insertDate(record)
+//                Log.d("LOG_CHECK", "insert date-record $record")
+//            }
+//            for(record in DB_TEST_INPUT_DATA_DETAIL){
+//                db.detailDao().insertDetail(record)
+//                Log.d("LOG_CHECK", "insert detail-record $record")
+//            }
         }
     }
 

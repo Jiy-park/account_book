@@ -1,10 +1,10 @@
 package com.example.account_book.room
 import androidx.room.*
 
-@Entity(tableName = "dateDB")
+@Entity(tableName = "dateDB", primaryKeys = ["yearMonthID", "dayID"])
 data class DateEntity(
-    @PrimaryKey
-    val ID:Int,
+    val yearMonthID:Int,
+    val dayID:Int,
 
     @ColumnInfo(name = "week")
     val week:String //날짜 - 요일
@@ -12,10 +12,11 @@ data class DateEntity(
 
 @Dao
 interface DateDao {
-    @Query("SELECT * FROM dateDB")
-    fun getAllDate() : List<DateEntity>
+    @Query("SELECT * FROM dateDB ORDER BY dayID DESC")
+    fun getAllDate() : MutableList<DateEntity>
 
-
+    @Query("SELECT * FROM dateDB WHERE yearMonthID = :yearMonth ORDER BY dayID DESC")
+    fun getAllDateByDate(yearMonth: Int) : MutableList<DateEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertDate(record: DateEntity)
