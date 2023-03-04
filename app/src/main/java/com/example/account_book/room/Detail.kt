@@ -26,11 +26,16 @@ data class DetailEntity(
 interface DetailDao{
     @Query("SELECT * FROM detailDB ORDER BY dateID, orderID DESC")
     fun getAllDetail():MutableList<DetailEntity>
+
     @Query("SELECT * FROM detailDB WHERE dateID = :date ORDER BY dateID, orderID DESC")
     fun getAllDetailByDate(date:Int):MutableList<DetailEntity>
 
+    @Query("SELECT COUNT(*) FROM detailDB WHERE dateID = :date")
+    fun getOrderCountByDate(date:Int):Int
+
     @Insert
     fun insertDetail(record: DetailEntity)
+
 
     @Update
     fun updateDetail(record: DetailEntity)

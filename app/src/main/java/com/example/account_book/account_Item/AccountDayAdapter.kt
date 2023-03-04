@@ -4,7 +4,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.account_book.R
 import com.example.account_book.databinding.AccountDayRecordBinding
 import com.example.account_book.main_menu.AccountFragment
 import com.example.account_book.room.DB
@@ -46,8 +48,14 @@ class AccountDayAdapter(val fragment: AccountFragment):RecyclerView.Adapter<Acco
                 detail.text = day.detail
                 detailDate.text = day.time
                 detailBank.text = day.bank
-                amount.text = if(day.amount > 0) { day.amount.toString() }
-                            else { (-day.amount).toString() }
+                if(day.amount > 0) {
+                    amount.text = day.amount.toString()
+                    amount.setTextColor(ContextCompat.getColor(fragment.requireContext(), R.color.income))
+                }
+                else {
+                    amount.text = (-day.amount).toString()
+                    amount.setTextColor(ContextCompat.getColor(fragment.requireContext(), R.color.expenditure))
+                }
             }
         }
     }
