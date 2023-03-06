@@ -28,10 +28,10 @@ interface DetailDao{
     fun getAllDetail():MutableList<DetailEntity>
 
     @Query("SELECT * FROM detailDB WHERE dateID = :date ORDER BY dateID, orderID DESC")
-    fun getAllDetailByDate(date:Int):MutableList<DetailEntity>
+    fun getAllDetailByDateID(date:Int):MutableList<DetailEntity>
 
     @Query("SELECT COUNT(*) FROM detailDB WHERE dateID = :date")
-    fun getOrderCountByDate(date:Int):Int
+    fun getOrderCountByDateID(date:Int):Int
 
     @Insert
     fun insertDetail(record: DetailEntity)
@@ -44,6 +44,6 @@ interface DetailDao{
     fun deleteDetail(record: DetailEntity)
 
     @Query("DELETE FROM detailDB WHERE (dateID = :date AND orderID = :order)")
-    fun deleteByDateOrder(date:Int, order: Int)
+    fun deleteByDateOrderIDs(date:Int, order: Int)
 }
 

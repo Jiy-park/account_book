@@ -1,0 +1,38 @@
+    //          ID  WEEK
+//    val DB_TEST_INPUT_DATA_DATE = listOf<DateEntity>(
+//        DateEntity(2302, 12, "일요일"),
+//        DateEntity(2302, 13, "월요일"),
+//        DateEntity(2302, 14, "화요일"),
+//        DateEntity(2302, 16, "목요일"),
+//        DateEntity(2302, 20, "월요일"),
+//        DateEntity(2302, 21, "화요일"),
+//        DateEntity(2302, 22, "수요일"),
+//        DateEntity(2302, 24, "금요일"),
+//        DateEntity(2303, 1, "수요일"),
+//        DateEntity(2303, 4, "토요일"),
+//        DateEntity(2303, 5, "일요일"),
+//        DateEntity(2303, 6, "월요일"),
+//        DateEntity(2303, 9, "목요일"),
+//    )
+
+//          DATE_ID ORDER_ID CLASSIFICATION DETAIL TIME BANK AMOUNT
+//    val DB_TEST_INPUT_DATA_DETAIL = listOf<DetailEntity>(
+//        DetailEntity(230212, 1, "테스트1", "ㅈㅈ", "12:33", "지용", 10000),
+//        DetailEntity(230212, 2, "테스트1", "ㅈㅈ", "15:12", "지용", 10000),
+//        DetailEntity(230213, 1, "테스트3", "ㅈㅈ", "11:11", "지용", 10000),
+//        DetailEntity(230213, 2, "테스트2", "ㅈㅈ", "13:39", "지용", 10000),
+//        DetailEntity(230213, 3, "테스트2", "ㅈㅈ", "20:15", "지용", 10000),
+//        DetailEntity(230213, 4, "테스트3", "ㅈㅈ", "20:01", "지용", 10000),
+//        DetailEntity(230214, 1, "테스트3", "ㅈㅈ", "09:11", "지용", 10000),
+//        DetailEntity(230214, 2, "테스트3", "ㅈㅈ", "15:51", "지용", 10000),
+//        DetailEntity(230216, 1, "테스트1", "ㅈㅈ", "13:24", "지용", 10000),
+//        DetailEntity(230216, 2, "테스트1", "ㅈㅈ", "15:51", "지용", 10000),
+//        DetailEntity(230220, 1, "테스트4", "ㅈㅈ", "13:37", "지용", 10000),
+//        DetailEntity(230221, 1, "테스트5", "ㅈㅈ", "15:49", "지용", 10000),
+//        DetailEntity(230221, 2, "테스트6", "ㅈㅈ", "19:22", "지용", 10000),
+//        DetailEntity(230222, 1, "테스트1", "ㅈㅈ", "20:40", "지용", 10000),
+//        DetailEntity(230224, 1, "테스트2", "ㅈㅈ", "10:05", "지용", 10000),
+//        DetailEntity(230224, 2, "테스트3", "ㅈㅈ", "13:14", "지용", 10000),
+//        DetailEntity(230224, 3, "테스트4", "ㅈㅈ", "15:51", "지용", 10000),
+//        DetailEntity(230224, 4, "테스트1", "ㅈㅈ", "20:27", "지용", 10000)
+//    )

@@ -74,7 +74,7 @@ class AddNewRecord : AppCompatActivity() {
         binding.btnSave.setOnClickListener {
             val yearMonthID = ((year*100 + month) - 200000) //2023 / 3 / 5 ->  2303 / 5
             val dateID = yearMonthID*100+day
-            val orderID = db.detailDao().getOrderCountByDate(dateID) //2303 / 5 -> 230305
+            val orderID = db.detailDao().getOrderCountByDateID(dateID) //2303 / 5 -> 230305
             val time = "$hour:$minute"
             val amount = if(incomeMode) binding.editAmount.text.toString().toInt()
                         else -(binding.editAmount.text.toString().toInt())

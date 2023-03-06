@@ -12,8 +12,8 @@ import com.example.account_book.main_menu.AccountFragment
 import com.example.account_book.room.DB
 import com.example.account_book.room.DetailEntity
 
-class AccountDayAdapter(val fragment: AccountFragment):RecyclerView.Adapter<AccountDayAdapter.Holder>() {
-    var dayList = mutableListOf<DetailEntity>()
+class AccountDetailAdapter(val fragment: AccountFragment):RecyclerView.Adapter<AccountDetailAdapter.Holder>() {
+    var detailList = mutableListOf<DetailEntity>()
     private lateinit var db: DB
     private lateinit var itemClickListener : OnItemClickListener
 
@@ -34,13 +34,13 @@ class AccountDayAdapter(val fragment: AccountFragment):RecyclerView.Adapter<Acco
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
         }
-        holder.setting(dayList[position])
+        holder.setting(detailList[position])
     }
 
-    override fun getItemCount() = dayList.size
+    override fun getItemCount() = detailList.size
 
 
-    inner class Holder(val binding:AccountDayRecordBinding):RecyclerView.ViewHolder(binding.root){
+    inner class Holder(private val binding:AccountDayRecordBinding):RecyclerView.ViewHolder(binding.root){
         fun setting(day: DetailEntity){
             Log.d("LOG_CHECK", "Holder :: setting() called")
             binding.run {
