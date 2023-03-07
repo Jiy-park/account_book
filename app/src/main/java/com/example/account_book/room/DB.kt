@@ -10,9 +10,6 @@ import androidx.room.RoomDatabase
 abstract class DB:RoomDatabase() {
     abstract fun dateDao():DateDao
     abstract fun detailDao():DetailDao
-    init{
-        Log.d("LOG_CHECK", "DB :: () called")
-    }
     companion object{
         private var INSTANCE:DB? = null
         fun getDatabase(context: Context):DB?{

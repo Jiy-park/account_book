@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.account_book.databinding.ActivityAddNewRecordBinding
@@ -12,7 +13,7 @@ import com.example.account_book.room.DateEntity
 import com.example.account_book.room.DetailEntity
 
 
-class AddNewRecord : AppCompatActivity() {
+class AddNewRecordActivity : AppCompatActivity() {
     private val binding by lazy { ActivityAddNewRecordBinding.inflate(layoutInflater) }
     private val dialogDate by lazy { DatePickerDialog(this) }
     private lateinit var dialogTime: TimePickerDialog
@@ -51,7 +52,7 @@ class AddNewRecord : AppCompatActivity() {
             this.week = changeWeek(calendar.get(Calendar.DAY_OF_WEEK))
             binding.tvDate.text = "${this.year}/${this.month}/${this.day} - ${this.week}"
         }
-        dialogTime = TimePickerDialog(this@AddNewRecord,TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+        dialogTime = TimePickerDialog(this@AddNewRecordActivity,TimePickerDialog.OnTimeSetListener { _, hour, minute ->
             this.hour = hour
             this.minute = minute
             binding.tvTime.text = "${this.hour}:${this.minute}"
@@ -74,14 +75,17 @@ class AddNewRecord : AppCompatActivity() {
         binding.btnSave.setOnClickListener {
             val yearMonthID = ((year*100 + month) - 200000) //2023 / 3 / 5 ->  2303 / 5
             val dateID = yearMonthID*100+day
-            val orderID = db.detailDao().getOrderCountByDateID(dateID) //2303 / 5 -> 230305
+            val orderID = db.detailDao().getLastOrderCountByDateID(dateID) //2303 / 5 -> 230305
             val time = "$hour:$minute"
+
             val amount = if(incomeMode) binding.editAmount.text.toString().toInt()
-                        else -(binding.editAmount.text.toString().toInt())
+                            else -(binding.editAmount.text.toString().toInt())
+            Log.d("LOG_CHECK", "$yearMonthID $dateID $orderID $time  $amount")
+
             db.dateDao().insertDate(DateEntity(yearMonthID, day, week))
             db.detailDao().insertDetail(DetailEntity(
                 dateID,
-                orderID,
+                orderID+1,
                 binding.tvClass.text.toString(),
                 binding.editDetail.text.toString(),
                 time,

@@ -15,7 +15,7 @@ interface DateDao {
     @Query("SELECT * FROM dateDB ORDER BY dayID DESC")
     fun getAllDate() : MutableList<DateEntity>
 
-    @Query("SELECT * FROM dateDB WHERE yearMonthID = :yearMonth ORDER BY dayID DESC")
+    @Query("SELECT * FROM dateDB WHERE yearMonthID = :yearMonth ORDER BY dayId DESC")
     fun getAllDateByYearMonthID(yearMonth: Int) : MutableList<DateEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

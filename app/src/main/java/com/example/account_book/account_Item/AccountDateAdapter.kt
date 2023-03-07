@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.account_book.databinding.AccountMonthRecordBinding
@@ -25,39 +26,46 @@ class AccountDateAdapter(val fragment: AccountFragment):RecyclerView.Adapter<Acc
 //230212
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val date = dateList[position].yearMonthID*100 + dateList[position].dayID
-        val dayList = db.detailDao().getAllDetailByDateID(date)
-        Log.d("LOG_CHECK", "$date $dayList")
-        holder.setting(dateList[position], dayList)
+        val detailList = db.detailDao().getAllDetailByDateID(date)
+        holder.setting(dateList[position], detailList)
     }
 
     override fun getItemCount() = dateList.size
 
-
     inner class Holder(private val binding:AccountMonthRecordBinding):RecyclerView.ViewHolder(binding.root){
-        private val dayAdapter by lazy { AccountDetailAdapter(fragment) }
-
+        private val detailAdapter by lazy { AccountDetailAdapter(fragment) }
         @SuppressLint("SetTextI18n")
-        fun setting(oneDate: DateEntity, dayList:MutableList<DetailEntity>){
+        fun setting(oneDate: DateEntity, detailList:MutableList<DetailEntity>){
             val day = if(oneDate.dayID < 10) "0${oneDate.dayID}"
                         else oneDate.dayID.toString()
             val year = oneDate.yearMonthID/100 + 2000
             val month = oneDate.yearMonthID%100
             val yearMonth = "${year}.$month"
-            binding.run {
-                this.day.text = day
-                this.week.text = oneDate.week
-                this.yearMonth.text = yearMonth
-                dayAdapter.detailList = dayList
-                dayAdapter.setItemClickListener(object :AccountDetailAdapter.OnItemClickListener{
-                    override fun onClick(v: View, position: Int) {
-                        Log.d("LOG_CHECK", "${dayList[position].dateID} ${dayList[position].orderID}")//이거 너무 하드코딩이다 라이브데이터로 변경하고 뷰모델로 관리하는게 나을듯
-                        db.detailDao().deleteByDateOrderIDs(dayList[position].dateID, dayList[position].orderID)
-                        dayAdapter.notifyDataSetChanged()
-                    }
-                })
-                this.recyclerViewDayRecord.adapter = dayAdapter
-                this.recyclerViewDayRecord.layoutManager = LinearLayoutManager(fragment.context, LinearLayoutManager.VERTICAL,false)
-            }
+
+            binding.day.text = day
+            binding.week.text = oneDate.week
+            binding.yearMonth.text = yearMonth
+            detailAdapter.detailList = detailList
+            detailAdapter.setItemClickListener(object :AccountDetailAdapter.OnItemClickListener{
+                override fun onClick(v: View, position: Int) {
+                    Log.d("LOG_CHECK", "${detailList[position].dateID}")
+                    db.detailDao().deleteByDateOrderIDs(detailList[position].dateID, detailList[position].orderID)
+                    detailList.removeAt(position)
+                    detailAdapter.notifyItemRemoved(position)
+                    detailAdapter.notifyItemRangeChanged(position, detailList.size)
+                    if(detailList.size == 0) { deleteDateOnList(oneDate) }
+                }
+            })
+            binding.recyclerViewDayRecord.adapter = detailAdapter
+            binding.recyclerViewDayRecord.layoutManager = LinearLayoutManager(fragment.context, LinearLayoutManager.VERTICAL,false)
+        }
+
+        fun deleteDateOnList(date:DateEntity){
+            val position = dateList.indexOf(date)
+            dateList.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, dateList.size)
+            db.dateDao().deleteDate(date)
         }
     }
 }

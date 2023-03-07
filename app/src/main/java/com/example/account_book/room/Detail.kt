@@ -30,10 +30,11 @@ interface DetailDao{
     @Query("SELECT * FROM detailDB WHERE dateID = :date ORDER BY dateID, orderID DESC")
     fun getAllDetailByDateID(date:Int):MutableList<DetailEntity>
 
-    @Query("SELECT COUNT(*) FROM detailDB WHERE dateID = :date")
-    fun getOrderCountByDateID(date:Int):Int
+    @Query("SELECT MAX(orderID) FROM  detailDB GROUP BY :date")
+    fun getLastOrderCountByDateID(date:Int):Int
+//    select gender, max (point), min (point) from user group by gender;
 
-    @Insert
+    @Insert()
     fun insertDetail(record: DetailEntity)
 
 

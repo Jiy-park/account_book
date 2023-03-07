@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/reverse_menu_selected"
-    tools:context=".AddNewRecord">
+    tools:context=".AddNewRecordActivity">
     <LinearLayout
         android:id="@+id/topPanel"
         android:layout_width="match_parent"

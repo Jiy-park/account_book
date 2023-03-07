@@ -24,7 +24,6 @@ class AccountDetailAdapter(val fragment: AccountFragment):RecyclerView.Adapter<A
     fun setItemClickListener(itemClickListener: OnItemClickListener) { this.itemClickListener = itemClickListener }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        Log.d("LOG_CHECK", "AccountDayAdapter :: onCreateViewHolder() called")
         val binding = AccountDayRecordBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         db = DB.getDatabase(binding.root.context)!!
         return Holder(binding)
@@ -42,7 +41,6 @@ class AccountDetailAdapter(val fragment: AccountFragment):RecyclerView.Adapter<A
 
     inner class Holder(private val binding:AccountDayRecordBinding):RecyclerView.ViewHolder(binding.root){
         fun setting(day: DetailEntity){
-            Log.d("LOG_CHECK", "Holder :: setting() called")
             binding.run {
                 classification.text = day.classification
                 detail.text = day.detail
